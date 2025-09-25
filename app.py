@@ -24,7 +24,7 @@ def add_product():
         return jsonify({"message":"product accept"})
     return jsonify({"message":"invalid product data"}), 400
 
-@app.route('/api/products/delete/<int:product_id>,' methods=["DELETE"])
+@app.route('/api/products/delete/<int:product_id>', methods=["DELETE"])
 def delete_product(product_id):
     #Recuperar o produto de dados
     #Verificar se o produto existe
