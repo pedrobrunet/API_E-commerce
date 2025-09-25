@@ -36,6 +36,7 @@ def delete_product(product_id):
         db.session.commit()
         return jsonify({"message":"product deleted sucessfully"})
     return jsonify({"message":"product not found"}), 404
+
 # / dentro da rota significa pagina inicial 
 @app.route('/')
 def hello_word() :
