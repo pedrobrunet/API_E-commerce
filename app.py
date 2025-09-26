@@ -26,7 +26,7 @@ def add_product():
 
 @app.route('/api/products/delete/<int:product_id>', methods=["DELETE"])
 def delete_product(product_id):
-    #Recuperar o produto de dados
+    #Recuperar o prod  uto de dados
     #Verificar se o produto existe
     #Se existe, apagar do banco de dados
     #Se não existe, retornar 404 (not found)
@@ -37,6 +37,36 @@ def delete_product(product_id):
         return jsonify({"message":"product deleted sucessfully"})
     return jsonify({"message":"product not found"}), 404
 
+@app.route('/api/products/<int:product_id>', methods=["GET"])
+def get_product_details(product_id):
+    product = Product.query.get(product_id)
+    if product:
+        return jsonify({
+            "id": product.id,
+            "name": product.name,
+            "price": product.price,
+            "description": product.description
+        })
+    return jsonify({"message":"product not found"}), 404
+
+@app.route('/api/products/update/<int:product_id>', methods=["PUT"])
+def update_product(product_id):
+    data = request.json
+    product = Product.query.get(product_id)
+    if not product:
+        return jsonify({"message":"product not found"}), 404
+    data = request.json
+    if 'name' in data:
+        product.name = data['name']
+
+    if 'price' in data:
+        product.price = data['price']
+
+    if 'description' in data:
+        product.description = data['description']   
+
+    db.session.commit()    
+    return jsonify({"message":"product updated sucessfully"})        
 # / dentro da rota significa pagina inicial 
 @app.route('/')
 def hello_word() :
